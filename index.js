@@ -126,8 +126,8 @@ app.post('/login', async (req, res) => {
 
     res.cookie('token', token, {
         httpOnly: true,
-        secure: false,         // true in production with HTTPS
-        sameSite: 'lax',       // or 'strict' if needed
+        secure: true,         // true in production with HTTPS
+        sameSite: 'none',       // or 'strict' if needed
     }).json({  id: userDoc._id,username: userDoc.username });
 
     } catch (err) { 

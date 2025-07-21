@@ -14,11 +14,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Comment from './models/comment.js';
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://frontend-kappa-eight-42.vercel.app'
+];
+
 const app=express();
 app.use(express.json())
+
 app.use(cors({
-  origin: 'http://localhost:3000',
-  'https://frontend-kappa-eight-42.vercel.app' , // your React app
+  origin: function (origin, callback) {
+    // allow requests with no origin like mobile apps or curl
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
